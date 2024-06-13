@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class JavaBootCampAdvApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(JavaBootCampAdvApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(JavaBootCampAdvApplication.class, args);
+	}
 
 }
