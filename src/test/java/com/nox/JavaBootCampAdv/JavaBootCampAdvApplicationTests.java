@@ -9,5 +9,4 @@ class JavaBootCampAdvApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }
