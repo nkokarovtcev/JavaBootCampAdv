@@ -12,19 +12,19 @@ import java.time.Month;
 import java.util.List;
 
 @RestController
-@RequestMapping("/salaryPayments")
+@RequestMapping("salaryPayments")
 @RequiredArgsConstructor
 @SuppressWarnings("unused")
 public class SalaryController {
 
     private final SalaryService salaryService;
 
-    @PostMapping("/payout")
+    @PostMapping("payout")
     public ResponseEntity<List<SalaryPaymentDto>> payMonthlyPayments(@Valid @RequestBody PaymentRequestDto paymentRequest) {
         return ResponseEntity.ok(salaryService.payMonthlyPayments(paymentRequest));
     }
 
-    @GetMapping("/employee/{id}")
+    @GetMapping("employee/{id}")
     public ResponseEntity<List<SalaryPaymentDto>> getPaymentsByEmployee(
             @PathVariable Long id,
             @RequestParam(value = "year", required = false) Integer year,
@@ -33,7 +33,7 @@ public class SalaryController {
         return ResponseEntity.ok(salaryService.getPaymentsByEmployee(id, year, month));
     }
 
-    @GetMapping("/company/{id}")
+    @GetMapping("company/{id}")
     public ResponseEntity<List<SalaryPaymentDto>> getPaymentsByCompany(
             @PathVariable Long id,
             @RequestParam(value = "year", required = false) Integer year,
@@ -42,7 +42,7 @@ public class SalaryController {
         return ResponseEntity.ok(salaryService.getPaymentsByCompany(id, year, month));
     }
 
-    @GetMapping("/")
+    @GetMapping()
     public ResponseEntity<List<SalaryPaymentDto>> getPayments(
             @RequestParam(value = "year", required = false) Integer year,
             @RequestParam(value = "month", required = false) Month month
@@ -50,7 +50,7 @@ public class SalaryController {
         return ResponseEntity.ok(salaryService.getPayments(year, month));
     }
 
-    @GetMapping("/total")
+    @GetMapping("total")
     public ResponseEntity<Double> getTotalPayments(
             @RequestParam(value = "year", required = false) Integer year,
             @RequestParam(value = "month", required = false) Month month
@@ -58,7 +58,7 @@ public class SalaryController {
         return ResponseEntity.ok(salaryService.getTotalPayments(year, month));
     }
 
-    @GetMapping("/total/employee/{id}")
+    @GetMapping("total/employee/{id}")
     public ResponseEntity<Double> getTotalPaymentsByEmployee(
             @PathVariable Long id,
             @RequestParam(value = "year", required = false) Integer year,
@@ -67,7 +67,7 @@ public class SalaryController {
         return ResponseEntity.ok(salaryService.getTotalPaymentsByEmployee(id, year, month));
     }
 
-    @GetMapping("/total/company/{id}")
+    @GetMapping("total/company/{id}")
     public ResponseEntity<Double> getTotalPaymentsByCompany(
             @PathVariable Long id,
             @RequestParam(value = "year", required = false) Integer year,
@@ -76,7 +76,7 @@ public class SalaryController {
         return ResponseEntity.ok(salaryService.getTotalPaymentsByCompany(id, year, month));
     }
 
-    @GetMapping("/average")
+    @GetMapping("average")
     public ResponseEntity<Double> getAveragePayments(
             @RequestParam(value = "year", required = false) Integer year,
             @RequestParam(value = "month", required = false) Month month
@@ -84,7 +84,7 @@ public class SalaryController {
         return ResponseEntity.ok(salaryService.getAveragePayments(year, month));
     }
 
-    @GetMapping("/average/employee/{id}")
+    @GetMapping("average/employee/{id}")
     public ResponseEntity<Double> getAveragePaymentsByEmployee(
             @PathVariable Long id,
             @RequestParam(value = "year", required = false) Integer year,
@@ -93,7 +93,7 @@ public class SalaryController {
         return ResponseEntity.ok(salaryService.getAveragePaymentsByEmployee(id, year, month));
     }
 
-    @GetMapping("/average/company/{id}")
+    @GetMapping("average/company/{id}")
     public ResponseEntity<Double> getAveragePaymentsByCompany(
             @PathVariable Long id,
             @RequestParam(value = "year", required = false) Integer year,

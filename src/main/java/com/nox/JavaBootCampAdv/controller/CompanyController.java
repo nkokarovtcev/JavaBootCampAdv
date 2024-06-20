@@ -9,19 +9,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/companies")
+@RequestMapping("companies")
 @RequiredArgsConstructor
 @SuppressWarnings("unused")
 public class CompanyController {
 
     private final CompanyService companyService;
 
-    @GetMapping("/")
+    @GetMapping()
     public ResponseEntity<List<CompanyDto>> getAllCompanies() {
         return ResponseEntity.ok(companyService.getAllCompanies());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<CompanyDto> getCompanyById(@PathVariable Long id) {
         return companyService.getCompanyById(id)
                 .map(ResponseEntity::ok)
@@ -29,23 +29,23 @@ public class CompanyController {
                 );
     }
 
-    @PostMapping("/")
+    @PostMapping()
     public ResponseEntity<CompanyDto> createCompany(@RequestBody CompanyDto company) {
         return ResponseEntity.ok(companyService.createCompany(company));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<CompanyDto> updateCompany(@PathVariable Long id, @RequestBody CompanyDto company) {
         return ResponseEntity.ok(companyService.updateCompany(id, company));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteCompany(@PathVariable Long id) {
         companyService.deleteCompany(id);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/generate")
+    @GetMapping("generate")
     public ResponseEntity<List<CompanyDto>> generateCompanies(@RequestParam int count) {
         return ResponseEntity.ok(companyService.generateCompanies(count));
     }
