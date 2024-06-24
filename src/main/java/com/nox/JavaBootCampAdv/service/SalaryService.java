@@ -6,8 +6,10 @@ import com.nox.JavaBootCampAdv.entity.Employee;
 import com.nox.JavaBootCampAdv.entity.SalaryPayment;
 import com.nox.JavaBootCampAdv.mapper.SalaryPaymentMapper;
 import com.nox.JavaBootCampAdv.repository.EmployeeRepository;
+import com.nox.JavaBootCampAdv.repository.SalaryAnalysisCachedRepository;
 import com.nox.JavaBootCampAdv.repository.SalaryPaymentRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SalaryService {
@@ -24,6 +27,7 @@ public class SalaryService {
     private final EmployeeRepository employeeRepository;
     private final SalaryPaymentMapper salaryPaymentMapper;
     private final SalaryPaymentRepository salaryPaymentRepository;
+    private final SalaryAnalysisCachedRepository salaryAnalysisCachedRepository;
 
     @Transactional
     public List<SalaryPaymentDto> payMonthlyPayments(PaymentRequestDto paymentRequest) {
@@ -51,7 +55,7 @@ public class SalaryService {
                 salaryPayments.add(salaryPaymentMapper.toDto(salaryPaymentRepository.save(salaryPayment)));
             }
         }
-
+        salaryAnalysisCachedRepository.invalidateCache(paymentRequest.getYear(), paymentRequest.getMonth());
         return salaryPayments;
     }
 
@@ -190,5 +194,32 @@ public class SalaryService {
 
     private boolean hasPaymentThisMonth(Employee employee, Integer year, Month month) {
         return !salaryPaymentRepository.findByEmployeeIdAndYearAndMonth(employee.getId(), year, month).isEmpty();
+    }
+
+    public String getComplexSalaryTrendsAnalysis(Integer year, Month month) {
+        long start = System.currentTimeMillis();
+        return makeVeryLongAndDeepAnalysis(year, month) + " made in " + (System.currentTimeMillis() - start) + " ms";
+    }
+
+    private String makeVeryLongAndDeepAnalysis(Integer year, Month month) {
+        return salaryAnalysisCachedRepository.findByYearAndMonth(year, month).orElseGet(
+                () -> {
+                    log.info("Emulation of the very long analysis for year = {} and month = {}", year, month);
+                    try {
+                        Thread.sleep(5000); // Emulation of the very long analysis
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    String analysisResult = "Very long and deep analysis";
+                    if (year != null) {
+                        analysisResult += " for year = " + year;
+                    }
+                    if (month != null) {
+                        analysisResult += " and month = " + month;
+                    }
+                    salaryAnalysisCachedRepository.cacheAnalysisResult(year, month, analysisResult);
+                    return analysisResult;
+                }
+        );
     }
 }

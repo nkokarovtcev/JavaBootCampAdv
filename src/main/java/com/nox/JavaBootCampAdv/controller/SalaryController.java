@@ -101,4 +101,12 @@ public class SalaryController {
     ) {
         return ResponseEntity.ok(salaryService.getAveragePaymentsByCompany(id, year, month));
     }
+
+    @GetMapping("getComplexSalaryTrendsAnalysis")
+    public ResponseEntity<String> getComplexSalaryTrendsAnalysis(
+            @RequestParam(value = "year", required = false) Integer year,
+            @RequestParam(value = "month", required = false) Month month
+    ) {
+        return ResponseEntity.ok(salaryService.getComplexSalaryTrendsAnalysis(year, month));
+    }
 }
