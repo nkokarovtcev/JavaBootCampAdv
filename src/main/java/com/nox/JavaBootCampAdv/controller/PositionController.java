@@ -9,19 +9,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/positions")
+@RequestMapping("positions")
 @RequiredArgsConstructor
 @SuppressWarnings("unused")
 public class PositionController {
 
     private final PositionService positionService;
 
-    @GetMapping("/")
+    @GetMapping()
     public ResponseEntity<List<PositionDto>> getAllPositions() {
         return ResponseEntity.ok(positionService.getAllPositions());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<PositionDto> getPositionById(@PathVariable Long id) {
         return positionService.getPositionById(id)
                 .map(ResponseEntity::ok)
@@ -29,28 +29,28 @@ public class PositionController {
                 );
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<PositionDto> createPosition(@RequestBody PositionDto position) {
         return ResponseEntity.ok(positionService.createPosition(position));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<PositionDto> updatePosition(@PathVariable Long id, @RequestBody PositionDto position) {
         return ResponseEntity.ok(positionService.updatePosition(id, position));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Void> deletePosition(@PathVariable Long id) {
         positionService.deletePosition(id);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/company/{id}")
+    @GetMapping("company/{id}")
     public ResponseEntity<List<PositionDto>> getPositionsByCompany(Long id) {
         return ResponseEntity.ok(positionService.getPositionsByCompany(id));
     }
 
-    @GetMapping("/generate")
+    @GetMapping("generate")
     public ResponseEntity<List<PositionDto>> generatePositions(@RequestParam int count) {
         return ResponseEntity.ok(positionService.generatePositions(count, null));
     }

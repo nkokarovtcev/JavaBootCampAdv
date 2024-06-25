@@ -1,0 +1,79 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="1" author="nkokarovtcev">
+        <createTable tableName="companies">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="location" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint constraintName="uc_company_name" tableName="companies" columnNames="name"/>
+    </changeSet>
+    <changeSet id="2" author="nkokarovtcev">
+        <createTable tableName="positions">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)"/>
+            <column name="company_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="salary" type="double"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_position_company"
+                                 baseTableName="positions" baseColumnNames="company_id"
+                                 referencedTableName="companies" referencedColumnNames="id"/>
+        <createIndex indexName="idx_position_company_id" tableName="positions">
+            <column name="company_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="3" author="nkokarovtcev">
+        <createTable tableName="employees">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(255)"/>
+            <column name="last_name" type="varchar(255)"/>
+            <column name="position_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_employee_position"
+                                 baseTableName="employees" baseColumnNames="position_id"
+                                 referencedTableName="positions" referencedColumnNames="id"/>
+        <createIndex indexName="idx_employee_position_id" tableName="employees">
+            <column name="position_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="4" author="nkokarovtcev">
+        <createTable tableName="salary_payments">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="year" type="int"/>
+            <column name="month" type="int"/>
+            <column name="amount" type="double"/>
+            <column name="payment_date" type="date"/>
+            <column name="employee_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_salarypayment_employee"
+                                 baseTableName="salary_payments" baseColumnNames="employee_id"
+                                 referencedTableName="employees" referencedColumnNames="id"/>
+        <createIndex indexName="idx_salarypayment_employee_id" tableName="salary_payments">
+            <column name="employee_id"/>
+        </createIndex>
+        <createIndex indexName="idx_salarypayment_year_month" tableName="salary_payments">
+            <column name="year"/>
+            <column name="month"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>
