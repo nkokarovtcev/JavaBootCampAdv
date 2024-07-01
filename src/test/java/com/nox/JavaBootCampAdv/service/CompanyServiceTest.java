@@ -29,13 +29,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(classes = {MappersConfiguration.class})
 class CompanyServiceTest {
     @MockBean
-    private CompanyRepository companyRepository;
+    CompanyRepository companyRepository;
     @MockBean
-    private Faker faker;
+    Faker faker;
     @MockBean
-    private CompanyMapper companyMapperMock;
+    CompanyMapper companyMapperMock;
     @Autowired
-    private CompanyMapper companyMapper;
+    CompanyMapper companyMapper;
 
     @Test
     public void testGetAllCompanies() {
