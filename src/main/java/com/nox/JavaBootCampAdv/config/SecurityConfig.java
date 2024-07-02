@@ -39,7 +39,6 @@ class SecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/salaryPayments*")).hasAuthority(AUTHORITY_MANAGER)
                         .requestMatchers(new AntPathRequestMatcher("/*")).hasAuthority(AUTHORITY_USER)
                         .anyRequest().authenticated())
-                //.requestMatchers(new AntPathRequestMatcher("/")).authenticated());
                 .oauth2ResourceServer(oath2 -> oath2.jwt(Customizer.withDefaults()));
         return http.build();
     }
