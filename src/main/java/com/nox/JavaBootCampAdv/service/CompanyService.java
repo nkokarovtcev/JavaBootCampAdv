@@ -63,7 +63,7 @@ public class CompanyService {
 
     public List<CompanyDto> generateCompanies(int count) {
         return IntStream.range(0, count)
-                .mapToObj(_ -> {
+                .mapToObj(unused -> {
                     Company company = new Company();
                     company.setName(faker.company().name());
                     company.setLocation(faker.address().fullAddress());
