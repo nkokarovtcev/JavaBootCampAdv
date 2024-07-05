@@ -1,13 +1,13 @@
 package com.nox.JavaBootCampAdv;
 
 import com.github.javafaker.Faker;
-import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-@SpringBootConfiguration
+@Configuration
 @SuppressWarnings("unused")
 public class AppConfig {
 

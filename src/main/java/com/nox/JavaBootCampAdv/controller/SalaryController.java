@@ -5,6 +5,7 @@ import com.nox.JavaBootCampAdv.dto.SalaryPaymentDto;
 import com.nox.JavaBootCampAdv.service.SalaryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,11 @@ import java.util.List;
 public class SalaryController {
 
     private final SalaryService salaryService;
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+    }
 
     @PostMapping("payout")
     public ResponseEntity<List<SalaryPaymentDto>> payMonthlyPayments(@Valid @RequestBody PaymentRequestDto paymentRequest) {

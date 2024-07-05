@@ -58,7 +58,7 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="year" type="int"/>
-            <column name="month" type="int"/>
+            <column name="month" type="tinyint"/>
             <column name="amount" type="double"/>
             <column name="payment_date" type="date"/>
             <column name="employee_id" type="bigint">
