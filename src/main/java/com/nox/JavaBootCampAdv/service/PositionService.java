@@ -83,7 +83,7 @@ public class PositionService {
         }
         return companiesToUse.stream()
                 .flatMap(company -> IntStream.range(0, count)
-                        .mapToObj(_ -> {
+                        .mapToObj(unused -> {
                             PositionDto position = new PositionDto();
                             position.setName(faker.company().profession());
                             position.setCompanyId(company.getId());

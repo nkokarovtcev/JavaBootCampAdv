@@ -91,7 +91,7 @@ public class EmployeeService {
                 .flatMap(position ->
                         IntStream.range(0, count)
                                 .parallel()
-                                .mapToObj(_ -> {
+                                .mapToObj(unused -> {
                                     EmployeeDto employeeDto = new EmployeeDto();
                                     employeeDto.setFirstName(faker.name().firstName());
                                     employeeDto.setLastName(faker.name().lastName());
